@@ -12,13 +12,11 @@ $button_text = get_post_meta(6, "button_text", true);
 $course_url = get_post_meta(6, "course_url", true);
 $optin_text = get_post_meta(6, "optin_text", true);
 $optin_button_text = get_post_meta(6, "optin_button_text", true);
-
 $boosted_sec_title = get_field("boosted_title");
-// Advanced Custom Fields //
-$boosted_sec_feature_image = get_field("boosted_feature_image");
-// is an array actually
-$boosted_sec_desc = get_field("boosted_section_description");
 
+// Advanced Custom Fields //
+$boosted_sec_feature_image = get_field("boosted_feature_image"); // image array 
+$boosted_sec_desc = get_field("boosted_section_description");
 $reason_one_title = get_field("reason_one_title");
 $reason_one_des = get_field("reason_one_description");
 $reason_two_title = get_field("reason_two_title");
@@ -27,6 +25,12 @@ $reason_two_des = get_field("reason_two_description");
 $who_feature_image = get_field("who_feature_image");
 $who_section_title = get_field("who_section_title");
 $who_section_body = get_field("who_section_body");
+
+// Features Section 
+$features_section_image = get_field("features_section_image");
+$features_section_title = get_field("features_section_title");
+$features_section_body = get_field("features_section_body");
+
 
 get_header();
 ?>
@@ -40,9 +44,8 @@ get_header();
 			<div class="container clearfix">
 				<div class="row">
 					<div class="col-sm-5">
-						<img src="<?php bloginfo(
-        "stylesheet_directory"
-      ); ?>/assets/img/logo-badge.png" alt="Bootstrap to WP" class="logo img-responsive">
+						<img src="<?php bloginfo("stylesheet_directory"); ?>/assets/img/logo-badge.png" 
+						alt="Bootstrap to WP" class="logo img-responsive">
 					</div><!-- END .col -->
 					<div class="col-sm-7 hero-text">
 						<h1 class="page-title"><?php bloginfo("name"); ?></h1>
@@ -151,10 +154,7 @@ get_header();
 		<div class="container">
 			
 			<div class="section-header">
-				
-
-<?php echo $who_feature_image["url"]; ?>
-				
+								
 				<?php if (!empty($who_feature_image)): ?>
 				<img src="<?php echo $who_feature_image["url"]; ?>" 
 				alt="<?php echo $who_feature_image["alt"]; ?>">
@@ -164,10 +164,9 @@ get_header();
 				
 			</div><!-- section-header -->
 
-			
 			<div class="row">
 				<div class="col-sm-8 col-sm-offset-2">
-					<div><?php echo $who_section_title; ?></div>
+					<div><?php echo $who_section_body; ?></div>
 				</div><!-- end col -->
 			</div><!-- row -->
 	
@@ -182,43 +181,59 @@ get_header();
 		<div class="container">
 		
 			<div class="section-header">
-				<img src="<?php bloginfo(
-      "stylesheet_directory"
-    ); ?>/assets/img/icon-rocket.png" alt="Rocket">
-				<h2>Course Features</h2>
+				
+				<?php if (!empty($features_section_image)): ?>
+					<img src="<?php echo $features_section_image["url"]; ?>" 
+					alt="<?php echo $features_section_image["alt"]; ?>">
+				<?php endif; ?>
+				
+				<h2><?php echo $features_section_title; ?></h2>
+				
+				<?php if (!empty($features_section_body)): ?>
+					<p class="lead"><?php echo $features_section_body; ?></p>
+				<?php endif; ?>
+
 			</div><!-- section-header -->
 			
-			<div class="row">
+			<div class="row">				
+				<?php 
+					$loop = new WP_Query( array( 
+						'post_type' => 'home_feature_icon',
+						'orderby' => 'post_id',
+						'order' => 'ASC',
+			 		   ));
+				?>
+				<?php while( $loop->have_posts() ) : $loop->the_post(); ?>
+					<div class="col-sm-2">						
+						<i class="<?php the_field('home_features_icon'); ?>"></i>
+						<h4><?php the_title(); ?> </h4>
+					</div><!-- end col -->
+				<?php endwhile; ?>
 				
-				<div class="col-sm-2">
-					<i class="ci ci-computer"></i>
-					<h4>Lifetime access to 80+ lectures</h4>
-				</div><!-- end col -->
-				
-				<div class="col-sm-2">
+				<!-- <div class="col-sm-2">
 					<i class="ci ci-watch"></i>
 					<h4>10+ hours of HD video content</h4>
-				</div><!-- end col -->
+				</div>
 				
 				<div class="col-sm-2">
 					<i class="ci ci-calendar"></i>
 					<h4>30-day money back guarantee</h4>
-				</div><!-- end col -->
+				</div>
 				
 				<div class="col-sm-2">
 					<i class="ci ci-community"></i>
 					<h4>Access to a community of like-minded students</h4>
-				</div><!-- end col -->
+				</div>
 				
 				<div class="col-sm-2">
 					<i class="ci ci-instructor"></i>
 					<h4>Direct access to the instructor</h4>
-				</div><!-- end col -->
+				</div>
 				
 				<div class="col-sm-2">
 					<i class="ci ci-device"></i>
 					<h4>Accessible content on your mobile devices</h4>
-				</div><!-- end col -->
+				</div> -->
 				
 			</div><!-- row -->
 		</div><!-- container -->

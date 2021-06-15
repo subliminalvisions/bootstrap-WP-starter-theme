@@ -55,7 +55,9 @@
 								<span class="icon-bar"></span>
 							</button>
 							
-							<a class="navbar-brand" href="/" ><img src="<?php bloginfo('stylesheet_directory') ?>/assets/img/logo.png" alt="Bootstrap for WP" class="logo "></a>
+							<a class="navbar-brand" href="/" >
+								<img src="<?php bloginfo('stylesheet_directory') ?>/assets/img/logo.png" alt="Bootstrap for WP" class="logo ">
+							</a>
 						</div><!-- END div.navbar-header -->
 												
 						<?php 
