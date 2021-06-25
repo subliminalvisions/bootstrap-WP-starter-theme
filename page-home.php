@@ -15,7 +15,7 @@ $optin_button_text = get_post_meta(6, "optin_button_text", true);
 $boosted_sec_title = get_field("boosted_title");
 
 // Advanced Custom Fields //
-$boosted_sec_feature_image = get_field("boosted_feature_image"); // image array 
+$boosted_sec_feature_image = get_field("boosted_feature_image"); // image array
 $boosted_sec_desc = get_field("boosted_section_description");
 $reason_one_title = get_field("reason_one_title");
 $reason_one_des = get_field("reason_one_description");
@@ -26,11 +26,14 @@ $who_feature_image = get_field("who_feature_image");
 $who_section_title = get_field("who_section_title");
 $who_section_body = get_field("who_section_body");
 
-// Features Section 
+// Features Section
 $features_section_image = get_field("features_section_image");
 $features_section_title = get_field("features_section_title");
 $features_section_body = get_field("features_section_body");
 
+// project features
+$project_feature_title = get_field("project_feature_title");
+$project_feature_body = get_field("project_feature_body");
 
 get_header();
 ?>
@@ -196,44 +199,19 @@ get_header();
 			</div><!-- section-header -->
 			
 			<div class="row">				
-				<?php 
-					$loop = new WP_Query( array( 
-						'post_type' => 'home_feature_icon',
-						'orderby' => 'post_id',
-						'order' => 'ASC',
-			 		   ));
-				?>
-				<?php while( $loop->have_posts() ) : $loop->the_post(); ?>
-					<div class="col-sm-2">						
-						<i class="<?php the_field('home_features_icon'); ?>"></i>
-						<h4><?php the_title(); ?> </h4>
-					</div><!-- end col -->
-				<?php endwhile; ?>
-				
-				<!-- <div class="col-sm-2">
-					<i class="ci ci-watch"></i>
-					<h4>10+ hours of HD video content</h4>
-				</div>
-				
-				<div class="col-sm-2">
-					<i class="ci ci-calendar"></i>
-					<h4>30-day money back guarantee</h4>
-				</div>
-				
-				<div class="col-sm-2">
-					<i class="ci ci-community"></i>
-					<h4>Access to a community of like-minded students</h4>
-				</div>
-				
-				<div class="col-sm-2">
-					<i class="ci ci-instructor"></i>
-					<h4>Direct access to the instructor</h4>
-				</div>
-				
-				<div class="col-sm-2">
-					<i class="ci ci-device"></i>
-					<h4>Accessible content on your mobile devices</h4>
-				</div> -->
+				<?php $loop = new WP_Query([
+      "post_type" => "home_feature_icon",
+      "orderby" => "post_id",
+      "order" => "ASC",
+    ]); ?>
+							<?php while ($loop->have_posts()):
+         $loop->the_post(); ?>
+								<div class="col-sm-2">						
+									<i class="<?php the_field("home_features_icon"); ?>"></i>
+									<h4><?php the_title(); ?> </h4>
+								</div><!-- end col -->
+							<?php
+       endwhile; ?>
 				
 			</div><!-- row -->
 		</div><!-- container -->
@@ -247,31 +225,38 @@ get_header();
 	<section id="project-features">
 		<div class="container">
 		
-			<h2>Final Project Features</h2>
-			<p class="lead">Throughout this entire course, you work towards building an incredibly beautiful website. Want to see the website <strong>you</strong> are going to build? <em>You're looking at it!</em> The website you're using right now is the website you will have built entirely by yourself, by the end of this course.</p>
+			<h2><?php echo $project_feature_title; ?></h2>
+			<p class="lead">
+				<?php echo $project_feature_body; ?><
+			</p>
 			
 			<div class="row">
-				<div class="col-sm-4">
-					<img src="<?php bloginfo(
-       "stylesheet_directory"
-     ); ?>/assets/img/icon-design.png" alt="Design">
+				<!-- <div class="col-sm-4">
+					<img src="" alt="Design">
 					<h3>Super Modern Design</h3>
 					<p>You get to work with a modern, professional quality design &amp; layout.</p>
-				</div><!-- col -->
-				<div class="col-sm-4">
-					<img src="<?php bloginfo(
-       "stylesheet_directory"
-     ); ?>/assets/img/icon-code.png" alt="Code">
-					<h3>Quality HTML5 &amp; CSS3</h3>
-					<p>You'll learn how hand-craft a stunning website with valid, semantic and beautiful HTML5 &amp; CSS3.</p>
-				</div><!-- col -->
-				<div class="col-sm-4">
-					<img src="<?php bloginfo(
-       "stylesheet_directory"
-     ); ?>/assets/img/icon-cms.png" alt="CMS">
-					<h3>Easy-to-use CMS</h3>
-					<p>Allow your clients to easily update their websites by converting your static websites to dynamic websites, using WordPress.</p>
-				</div><!-- col -->
+				</div>
+ -->				
+			 	<?php $loop = new WP_Query([
+       "post_type" => "project_feature",
+       "orderby" => "post_id",
+       "order" => "ASC",
+     ]); ?>
+						 <?php while ($loop->have_posts()):
+         $loop->the_post(); ?>
+		 
+		 <div class="col-sm-4"> 
+			 <?php if (has_post_thumbnail()) {
+      the_post_thumbnail();
+    } ?>
+			 <h3><?php the_title(); ?></h3>
+			 <p><?php the_content(); ?></p>
+		 </div>
+			   
+							
+							 <!-- end col -->
+						 <?php
+       endwhile; ?>
 				
 			</div><!-- row -->
 			
