@@ -35,6 +35,18 @@ $features_section_body = get_field("features_section_body");
 $project_feature_title = get_field("project_feature_title");
 $project_feature_body = get_field("project_feature_body");
 
+// leader section
+$leader_section_title = get_field("leader_section_title");
+$leader_section_name = get_field("leader_section_name");
+$bio_excerpt = get_field("bio_excerpt");
+$full_bio = get_field("full_bio");
+$twitter_username = get_field("twitter_username");
+$facebook_username = get_field("facebook_username");
+$google_plus_username = get_field("google_plus_username");
+$num_courses = get_field("num_courses");
+$num_reviews = get_field("num_reviews");
+$num_of_students = get_field("num_of_students");
+
 get_header();
 ?>
 
@@ -289,32 +301,42 @@ get_header();
 				<div class="col-sm-8 col-md-6">
 					<div class="row">
 						<div class="col-lg-8">
-							<h2>Your Instructor <small>Stephen Harris </small></h2>
+							<h2><?php echo $leader_section_title; ?> <small><?php echo $leader_section_name; ?> </small></h2>
 						</div><!-- end col -->
+							
+							<!-- // leader section  -->
+							
 						<div class="col-lg-4">
-							<a href="https://twitter.com/bradhussey" class="badge social twitter" target="_blank"><i class="fa fa-twitter"></i></a>
-							<a href="https://facebook.com/bradhussey" class="badge social facebook" target="_blank"><i class="fa fa-facebook"></i></a>
-							<a href="https://plus.google.com/+BradHussey" class="badge social gplus" target="_blank"><i class="fa fa-google-plus"></i></a>
+							<?php if (!empty($twitter_username)): ?>
+							<a href="https://twitter.com/<?php echo $twitter_username; ?>" class="badge social twitter" target="_blank"><i class="fa fa-twitter"></i></a>
+							<?php endif; ?>
+							
+							<?php if (!empty($facebook_username)): ?>
+							<a href="https://facebook.com/<?php echo $facebook_username; ?>" class="badge social twitter" target="_blank"><i class="fa fa-facebook"></i></a>
+							<?php endif; ?>
+							<?php if (!empty($google_plus_username)): ?>
+							<a href="https://plus.google.com/<?php echo $google_plus_username; ?>" class="badge social twitter" target="_blank"><i class="fa fa-google-plus"></i></a>
+							<?php endif; ?>
+							
+							
 						</div><!-- end col -->
 					
 					</div><!-- row -->
 					
-					<p class="lead">A highly skilled professional, Stephen Harris is a passionate and experienced web designer, developer, blogger and digital entrepreneur.<p>
 					
-					<p>Hailing from North Of The Wall (Yellowknife, Canada), Brad made the trek to the Wet Coast (Vancouver, Canada) to educate and equip himself with the necessary skills to become a spearhead in his trade of solving problems on the web, crafting design solutions, and speaking in code.</p>
-					
-					<p>Brad's determination and love for what he does has landed him in some pretty interesting places with some neat people. He's had the privilege of working with, and providing solutions for, numerous businesses, big &amp; small, across the Americas.</p>
-					
-					<p>Brad builds custom websites, and provides design solutions for a wide-array of clientele at his company, Brightside Studios. He regularly blogs about passive income, living your life to the fullest, and provides premium quality web design tutorials and courses for tens of thousands of amazing people desiring to master their craft.</p>
+					<p class="lead"><?php echo $bio_excerpt; ?><p>
+					 
+					 <div class="full-bio"><?php echo $full_bio; ?><div>
 					
 					<hr>
 					
 					<h3>The Numbers <small>They Don't Lie</small></h3>
+					
 					<div class="row">
 						<div class="col-xs-4">
 							<div class="num">
 								<div class="num-content">
-									41,000+ <span>students</span>
+									<?php echo $num_of_students; ?> <span>students</span>
 								</div><!-- num-content -->
 							</div><!-- num -->
 						</div><!-- end col -->
@@ -322,7 +344,7 @@ get_header();
 						<div class="col-xs-4">
 							<div class="num">
 								<div class="num-content">
-									568 <span>reviews</span>
+									<?php echo $num_reviews; ?> <span>reviews</span>
 								</div><!-- num-content -->
 							</div><!-- num -->
 						</div><!-- end col -->
@@ -330,7 +352,7 @@ get_header();
 						<div class="col-xs-4">
 							<div class="num">
 								<div class="num-content">
-									8 <span>courses</span>
+									<?php echo $num_courses; ?> <span>courses</span>
 								</div><!-- num-content -->
 							</div><!-- num -->
 						</div><!-- end col -->
@@ -351,69 +373,42 @@ get_header();
 			<div class="row">
 			
 				<div class="col-sm-8 col-sm-offset-2">
-					<h2>What People Are Saying About Brad</h2>
+					<h2>What People Are Saying About Stephen</h2>
 					
-					<!-- TESTIMONIAL -->
-					<div class="row testimonial">
-						<div class="col-sm-4">
-							<img src="<?php bloginfo(
-         "stylesheet_directory"
-       ); ?>/assets/img/brennan.jpg" alt="Brennan">
-						</div><!-- end col -->
-						<div class="col-sm-8">
-							<blockquote>
-								These videos are well created, concise, fast-paced, easy to follow, and just funny enough to keep you chuckling as you're slamming out lines of code. I've taken 3 courses from this instructor. Whenever I have questions he is right there with a simple solution or a helpful suggestion to keep me going forward with the course work.
-								<cite>&mdash; Brennan, graduate of all of Brad's courses</cite>
-							</blockquote>
-						</div><!-- end col -->
-					</div><!-- row -->
+						
+						<?php $loop = new WP_Query([
+        "post_type" => "testimonial",
+        "orderby" => "post_id",
+        "order" => "ASC",
+      ]); ?>
+											 <?php while ($loop->have_posts()):
+              $loop->the_post(); ?>
+							 
+							 <!-- TESTIMONIAL -->
+							 <div class="row testimonial">
+								 <div class="col-sm-4">
+									 
+									 <?php if (has_post_thumbnail()) {
+            the_post_thumbnail();
+          } ?>
+									 <!-- feature img  -->
+								 </div>
+								 <div class="col-sm-8">
+									 <blockquote>
+										 <?php the_content(); ?>
+										 
+										 <cite>&mdash; <?php the_title(); ?></cite>
+									 </blockquote>
+								 </div>
+							 </div>
+							 
+												
+											 <?php
+            endwhile; ?>
+			
+			
 					
-					<!-- TESTIMONIAL -->
-					<div class="row testimonial">
-						<div class="col-sm-4">
-							<img src="<?php bloginfo(
-         "stylesheet_directory"
-       ); ?>/assets/img/ben.png" alt="Illustration of a man with a moustache">
-						</div><!-- end col -->
-						<div class="col-sm-8">
-							<blockquote>
-								I found Brad to be a great teacher, and a very inspiring person. It's clear he is very passionate about helping designers learn to code, and I look forward to more courses from him!
-								<cite>&mdash; Ben, graduate of Build a Website from Scratch with HTML &amp; CSS</cite>
-							</blockquote>
-						</div><!-- end col -->
-					</div><!-- row -->
-					
-					<!-- TESTIMONIAL -->
-					<div class="row testimonial">
-						<div class="col-sm-4">
-							<img src="<?php bloginfo(
-         "stylesheet_directory"
-       ); ?>/assets/img/aj.png" alt="Illustration of a man with a beard">
-						</div><!-- end col -->
-						<div class="col-sm-8">
-							<blockquote>
-								Brad is amazing and I honestly think he's the best tutor of all the courses I have taken on Udemy. Will definitely be following him in the future. Thanks Brad!
-								<cite>&mdash; AJ, graduate of Code a Responsive Website with Bootstrap 3</cite>
-							</blockquote>
-						</div><!-- end col -->
-					</div><!-- row -->
-	
-					<!-- TESTIMONIAL -->
-					<div class="row testimonial">
-						<div class="col-sm-4">
-							<img src="<?php bloginfo(
-         "stylesheet_directory"
-       ); ?>/assets/img/ernest.png" alt="Illustration of a man with a goatee">
-						</div><!-- end col -->
-						<div class="col-sm-8">
-							<blockquote>
-								Brad is an excellent instructor. His content is super high quality, and you can see the love and care put into every section. The tutorials are the perfect length, and you feel like your doing something right out the gate! I really can't believe this is free. I highly recommend taking advantage of this course.
-								<cite>&mdash; Ernest, graduate of Code Dynamic Websites with PHP</cite>
-							</blockquote>
-						</div><!-- end col -->
-					</div><!-- row -->
-					
-				</div><!-- end col -->
+				</div>
 				
 			</div><!-- row -->
 		</div><!-- container -->
