@@ -4,6 +4,10 @@
 $features_section_image = get_field("features_section_image");
 $features_section_title = get_field("features_section_title");
 $features_section_body = get_field("features_section_body");
+
+// $project_feature_title = get_field("project_feature_title");
+// $project_feature_body = get_field("project_feature_body");
+
 ?>
 
 
@@ -35,7 +39,10 @@ $features_section_body = get_field("features_section_body");
 								<h4><?php the_title(); ?> </h4>
 							</div><!-- end col -->
 						<?php
-   endwhile; ?>
+   endwhile; 
+   wp_reset_query();
+
+   ?>
 			
 		</div><!-- row -->
 	</div><!-- container -->
