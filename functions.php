@@ -177,3 +177,13 @@ require get_template_directory() . "/inc/customizer.php";
 if (defined("JETPACK__VERSION")) {
   require get_template_directory() . "/inc/jetpack.php";
 }
+
+/** Change the excerpt more link */
+function bootstrapwpx_excerpt_more($more)
+{
+  global $post;
+  return '<a class="moretag" href="' .
+    get_permalink($post->ID) .
+    '"> .. continue reading</a>';
+}
+add_filter("excerpt_more", "bootstrapwpx_excerpt_more");
