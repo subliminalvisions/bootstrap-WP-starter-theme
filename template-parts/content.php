@@ -6,9 +6,9 @@
  *
  * @package bootstrapwpx
  */
-ini_set("display_errors", 1);
-ini_set("display_startup_errors", 1);
-error_reporting(E_ALL);
+// ini_set("display_errors", 1);
+// ini_set("display_startup_errors", 1);
+// error_reporting(E_ALL);
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -58,12 +58,22 @@ error_reporting(E_ALL);
 		<?php the_post_thumbnail(); ?>
 	</div><!-- post-image -->
 	<?php } ?>
-	<div class="post-excerpt">
-		<?php the_excerpt(); ?>
-	</div><!-- post-excerpt -->	
 	
+	
+	<div class="post-body">
+		
+		<?php if (is_single()) {
+    the_content();
+  } else {
+    the_excerpt();
+  } ?>
+		
+	</div> <!--post-body-->
+		
 
 	<footer class="entry-footer">
 		<?php bootstrapwpx_entry_footer(); ?>
 	</footer><!-- .entry-footer -->
+		
+		
 </article><!-- #post-<?php the_ID(); ?> -->

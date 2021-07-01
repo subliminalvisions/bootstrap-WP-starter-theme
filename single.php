@@ -39,10 +39,13 @@ get_header(); ?>
 ?>
 
 			</main><!-- #main -->
-		</div>
-	</div>
+				
+			<!-- SIDEBAR
+				================================================== -->
+			<aside class="col-sm-4">
+				<?php get_sidebar(); ?>
+			</aside>
+		</div><!-- #primary -->
+	</div><!-- #container -->
 
-<?php
-get_sidebar();
-get_footer();
-
+<?php get_footer();

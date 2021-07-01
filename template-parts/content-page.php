@@ -6,49 +6,63 @@
  *
  * @package bootstrapwpx
  */
-
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-	</header><!-- .entry-header -->
+<header class="entry-header">
+	<?php
+ if (is_singular()):
+   the_title('<h1 class="entry-title">', "</h1>");
+ else:
+   the_title(
+     '<h3 class="entry-title"><a href="' .
+       esc_url(get_permalink()) .
+       '" rel="bookmark">',
+     "</a></h3>"
+   );
+ endif;
 
-	<?php bootstrapwpx_post_thumbnail(); ?>
+ if ("post" === get_post_type()): ?>
+		
+		<div class="post-details">
+			<i class="fa fa-user"></i> <?php the_author(); ?>
+			<i class="fa fa-clock-o"></i> <time><?php the_date(); ?></time>
+			<i class="fa fa-folder"></i> <?php the_category(", "); ?>
+			<i class="fa fa-tags"></i> Tagged <?php the_tags("", ", ", ""); ?>
+			
+			<div class="post-comments-badge">
+				<a href="<?php comments_link(); ?>"><i class="fa fa-comments"></i> <?php comments_number(
+  0,
+  1,
+  "%"
+); ?></a>
+			</div><!-- post-comments-badge -->
+		</div><!-- post-details -->
 
-	<div class="entry-content">
-		<?php
-		the_content();
+		<?php edit_post_link(
+    "Edit",
+    '<span><i class="fa fa-pencil"></i>',
+    "</span>"
+  ); ?>
+		
+	<?php endif;
+ ?>
+</header><!-- .entry-header -->
+	
 
-		wp_link_pages(
-			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'bootstrapwpx' ),
-				'after'  => '</div>',
-			)
-		);
-		?>
-	</div><!-- .entry-content -->
+	<?php if (has_post_thumbnail()) { ?>		
+	<div class="post-image">
+		<?php the_post_thumbnail(); ?>
+	</div><!-- post-image -->
+	<?php } ?>
+	<div class="post-body">
+		<?php the_content(); ?>
+	</div><!-- post-body -->	
+	
+	
+	<footer class="entry-footer">
+		<?php bootstrapwpx_entry_footer(); ?>
+	</footer><!-- .entry-footer -->
 
-	<?php if ( get_edit_post_link() ) : ?>
-		<footer class="entry-footer">
-			<?php
-			edit_post_link(
-				sprintf(
-					wp_kses(
-						/* translators: %s: Name of current post. Only visible to screen readers */
-						__( 'Edit <span class="screen-reader-text">%s</span>', 'bootstrapwpx' ),
-						array(
-							'span' => array(
-								'class' => array(),
-							),
-						)
-					),
-					wp_kses_post( get_the_title() )
-				),
-				'<span class="edit-link">',
-				'</span>'
-			);
-			?>
-		</footer><!-- .entry-footer -->
-	<?php endif; ?>
+
 </article><!-- #post-<?php the_ID(); ?> -->

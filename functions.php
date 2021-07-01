@@ -123,8 +123,8 @@ function bootstrapwpx_widgets_init()
     "description" => esc_html__("Add widgets here.", "bootstrapwpx"),
     "before_widget" => '<section id="%1$s" class="widget %2$s">',
     "after_widget" => "</section>",
-    "before_title" => '<h2 class="widget-title">',
-    "after_title" => "</h2>",
+    "before_title" => '<h4 class="widget-title">',
+    "after_title" => "</h4>",
   ]);
 }
 add_action("widgets_init", "bootstrapwpx_widgets_init");
